@@ -1,0 +1,4 @@
+---
+# vars file for ssh_config
+    ssh_port: Port 2234
+    ssh_conf_path: /etc/ssh/sshd_config

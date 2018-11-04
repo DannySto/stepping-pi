@@ -1,0 +1,30 @@
+---
+  - lineinfile: 
+        path: /etc/ssh/sshd_config 
+        regexp: #Port 22 
+        line: "{{ ssh_port }}"
+ 
+  - lineinfile: 
+        path: "{{ ssh_conf_path }}"
+        regexp: '#PasswordAuthentication yes' 
+        line: 'PasswordAuthentication no'
+
+  - lineinfile: 
+        path: "{{ ssh_conf_path }}"
+        regexp: '#PubkeyAuthentication yes' 
+        line: 'PubkeyAuthentication yes'
+
+  - lineinfile: 
+        path: "{{ ssh_conf_path }}"
+        regexp: '#ChallengeResponseAuthentication no' 
+        line: 'ChallengeResponseAuthentication no'
+
+  - lineinfile: 
+        path: "{{ ssh_conf_path }}"
+        regexp: 'UsePAM yes' 
+        line: 'UsePAM no'
+        
+  - name: install unattended-upgrades package
+    apt:
+        name:  unattended-upgrades 
+        state: present

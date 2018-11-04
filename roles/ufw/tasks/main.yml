@@ -1,0 +1,12 @@
+---
+# tasks file for ufw
+    - name: install ufw package
+      apt:
+            name: ufw
+            state: present
+
+    - name: Allow ssh through firewall
+      ufw: proto=tcp "{{ ssh_port }}"  rule=allow
+
+    - name: Set ufw policy
+      ufw: state=enabled direction=incoming policy=deny

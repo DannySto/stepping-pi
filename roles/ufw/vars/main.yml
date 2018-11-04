@@ -1,0 +1,3 @@
+---
+# vars file for ufw
+    ssh_port: Port 2234

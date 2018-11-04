@@ -1,0 +1,8 @@
+---
+- hosts: steppingstone
+  become: yes
+  roles:
+    - apt_update
+    - ssh_config
+    - ufw
+    - fail2ban

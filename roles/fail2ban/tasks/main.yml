@@ -1,0 +1,18 @@
+---
+# tasks file for fail2ban
+  - name: install fail2ban package
+    apt:
+        name:  fail2ban 
+        state: present
+
+  - name: Check that the fail2ban.conf exists
+    stat:
+      path: /etc/fail2ban/jail.local.test
+    register: stat_result
+
+  - name: Create the file, if it doesnt exist already
+    copy:
+        src: jail.local
+        dest: /etc/fail2ban/jail.local.test
+        remote_src: no
+    when: stat_result.stat.exists == False  
