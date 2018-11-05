@@ -1,0 +1,5 @@
+---
+- hosts: atlanta
+  become: yes
+  roles:
+    - apt_update
