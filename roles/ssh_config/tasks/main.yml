@@ -25,8 +25,7 @@
         line: 'UsePAM no'
 
 
-   handlers:
-    - name: Restart_service_ssh     
+    notify: Restart_service_ssh     
         
   - name: install unattended-upgrades package
     apt:

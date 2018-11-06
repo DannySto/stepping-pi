@@ -1,4 +1,6 @@
 ---
 # handlers file for ssh_config
-  - name: Restart_service_ssh
-    service: name=ssh state=restarted
+
+    - name: Restart_service_ssh
+      service: name=ssh state=restarted
+
