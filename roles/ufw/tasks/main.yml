@@ -5,8 +5,15 @@
             name: ufw
             state: present
 
+    - name: Start and enable UFW
+        ufw:
+          state: enabled        
+
     - name: Allow ssh through firewall
       ufw: proto=tcp "{{ ssh_port }}"  rule=allow
 
-    - name: Set ufw policy
+    - name: Establish default incomming firewall rule
       ufw: state=enabled direction=incoming policy=deny
+    
+    - name: Establish default outgoing firewall rule
+      ufw: state=enabled direction=outgoing policy=allow

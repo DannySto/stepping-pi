@@ -11,6 +11,21 @@
 
   - lineinfile: 
         path: "{{ ssh_conf_path }}"
+        regexp: '#ClientAliveCountMax 3' 
+        line: 'ClientAliveCountMax 2'
+
+  - lineinfile: 
+        path: "{{ ssh_conf_path }}"
+        regexp: '#ClientAliveInterval 300' 
+        line: 'ClientAliveInterval 0'
+
+  - lineinfile: 
+        path: "{{ ssh_conf_path }}"
+        regexp: 'X11Forwarding yes' 
+        line: 'X11Forwarding no'
+
+  - lineinfile: 
+        path: "{{ ssh_conf_path }}"
         regexp: '#PubkeyAuthentication yes' 
         line: 'PubkeyAuthentication yes'
 
@@ -23,10 +38,21 @@
         path: "{{ ssh_conf_path }}"
         regexp: 'UsePAM yes' 
         line: 'UsePAM no'
+      
+    notify: "Restart_service_ssh"     
 
+  - name: Establish Cronjob to update the openssh-server package on a daily basis
+        cron:
+          name: Cronjob to update the openssh-server package on a daily basis
+          user: root
+          minute: "0"
+          hour: "0"
+          day: "*"
+          month: "*"
+          weekday: "*"
+          state: present
+          job: "apt-get install openssh-server -y"
 
-    notify: Restart_service_ssh     
-        
   - name: install unattended-upgrades package
     apt:
         name:  unattended-upgrades 

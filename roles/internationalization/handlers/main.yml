@@ -1,0 +1,8 @@
+---
+# handlers file for internationalization
+
+  - name: update_tzdata
+    become: true
+    command: dpkg-reconfigure --frontend noninteractive tzdata
+
+  

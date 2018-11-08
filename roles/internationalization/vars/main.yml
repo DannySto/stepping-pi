@@ -1,0 +1,6 @@
+---
+# vars file for internationalization
+    locale: en_US.UTF-8
+    timezone: Europe/Amsterdam
+    xkbmodel: "pc105"
+    xkblayout: "gb"

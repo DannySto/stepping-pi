@@ -1,0 +1,39 @@
+---
+# tasks file for internationalization
+
+- lineinfile: 
+    path: /etc/locale.gen
+    regexp: '# en_US.UTF-8 UTF-8'
+    line: 'en_US.UTF-8 UTF-8'
+
+- name: Generate Locale
+  become: yes
+  command: locale-gen "{{ locale }}"
+
+- name: Set Locale
+  become: yes
+  command: update-locale LC_ALL= "{{ locale }}" LANG= "{{ locale }}"
+
+- name: set /etc/timezone
+  become: yes
+  template: src=../templates/timezone dest=/etc/timezone
+
+  notify: update_tzdata
+
+# set /etc/default/keyboard
+- name: set /etc/default/keyboard
+  become: yes
+  template: src=../templates/keyboard dest=/etc/default/keyboard
+
+- name: Expand filesystem to fill disk
+  command: raspi-config --expand-rootfs
+  become: yes
+
+- name: restart server 
+  shell: sleep 2 && /sbin/shutdown -r +1 'Reboot by Ansible deployment'
+  async: 1
+  poll: 0
+- name: waiting 360 secs for server to come back
+  wait_for_connection:
+        delay: 15
+        timeout: 360
