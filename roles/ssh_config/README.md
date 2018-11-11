@@ -1,22 +1,33 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+This role will harden and reconfigure your ssh server
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+The first step to configure SSH key authentication to your server is to generate an SSH key pair on your local computer.
+
+To do this, we can use a special utility called ssh-keygen, which is included with the standard OpenSSH suite of tools. By default, this will create a 2048 bit RSA key pair, which is fine for most uses.
+
+On your local computer, generate a SSH key pair by typing:
+
+ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/username/.ssh/id_rsa):
+The utility will prompt you to select a location for the keys that will be generated. By default, the keys will be stored in the ~/.ssh directory within your user's home directory. The private key will be called id_rsa and the associated public key will be called id_rsa.pub.
+
+
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Set the ssh_port: Port 22 variable in vars/main.yml
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+-
 
 Example Playbook
 ----------------
@@ -31,8 +42,3 @@ License
 -------
 
 BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
