@@ -1,57 +1,77 @@
 ---
-  - lineinfile: 
-        path: /etc/ssh/sshd_config 
-        regexp: #Port 22 
-        line: "{{ ssh_port }}"
- 
-  - lineinfile: 
+  - replace: 
+        path: "{{ ssh_conf_path }}"
+        regexp: '#Port 22'  
+        replace: "{{ ssh_port }}"
+
+  - lineinfile:
+        path: "{{ ssh_conf_path }}"
+        line: 'Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr'
+        insertafter: '#RekeyLimit default none'
+
+  - lineinfile:
+        path: "{{ ssh_conf_path }}"
+        line: 'KexAlgorithms curve25519-sha256@libssh.org'
+        insertafter: '#RekeyLimit default none'
+
+  - lineinfile:
+        path: "{{ ssh_conf_path }}"
+        line: 'MACs hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,umac-128-etm@openssh.com'
+        insertafter: '#RekeyLimit default none'
+
+  - replace:
+        path: "{{ ssh_conf_path }}"
+        regexp: '#RekeyLimit default none'
+        replace: 'Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr'
+
+  - replace: 
         path: "{{ ssh_conf_path }}"
         regexp: '#PasswordAuthentication yes' 
-        line: 'PasswordAuthentication no'
+        replace: 'PasswordAuthentication no'
 
-  - lineinfile: 
+  - replace: 
         path: "{{ ssh_conf_path }}"
         regexp: '#ClientAliveCountMax 3' 
-        line: 'ClientAliveCountMax 2'
+        replace: 'ClientAliveCountMax 2'
 
-  - lineinfile: 
+  - replace: 
         path: "{{ ssh_conf_path }}"
         regexp: '#ClientAliveInterval 300' 
-        line: 'ClientAliveInterval 0'
+        replace: 'ClientAliveInterval 0'
 
-  - lineinfile: 
+  - replace: 
         path: "{{ ssh_conf_path }}"
         regexp: 'X11Forwarding yes' 
-        line: 'X11Forwarding no'
+        replace: 'X11Forwarding no'
 
-  - lineinfile: 
+  - replace: 
         path: "{{ ssh_conf_path }}"
         regexp: '#PubkeyAuthentication yes' 
-        line: 'PubkeyAuthentication yes'
+        replace: 'PubkeyAuthentication yes'
 
-  - lineinfile: 
+  - replace: 
         path: "{{ ssh_conf_path }}"
         regexp: '#ChallengeResponseAuthentication no' 
-        line: 'ChallengeResponseAuthentication no'
+        replace: 'ChallengeResponseAuthentication no'
 
-  - lineinfile: 
+  - replace: 
         path: "{{ ssh_conf_path }}"
         regexp: 'UsePAM yes' 
-        line: 'UsePAM no'
+        replace: 'UsePAM no'
       
     notify: "Restart_service_ssh"     
 
-  - name: Establish Cronjob to update the openssh-server package on a daily basis
-        cron:
-          name: Cronjob to update the openssh-server package on a daily basis
-          user: root
-          minute: "0"
-          hour: "0"
-          day: "*"
-          month: "*"
-          weekday: "*"
-          state: present
-          job: "apt-get install openssh-server -y"
+ # - name: Establish Cronjob to update the openssh-server package on a daily basis
+ #       cron:
+ #         name: Cronjob to update the openssh-server package on a daily basis
+ #         user: root
+ #         minute: "0"
+ #         hour: "0"
+ #         day: "*"
+ #         month: "*"
+ #         weekday: "*"
+ #         state: present
+ #         job: "apt-get install openssh-server -y"
 
   - name: install unattended-upgrades package
     apt:
