@@ -46,6 +46,11 @@
 
   - replace: 
         path: "{{ ssh_conf_path }}"
+        regexp: '#PasswordAuthentication no' 
+        replace: 'PasswordAuthentication no'
+
+  - replace: 
+        path: "{{ ssh_conf_path }}"
         regexp: '#ChallengeResponseAuthentication no' 
         replace: 'ChallengeResponseAuthentication no'
 
