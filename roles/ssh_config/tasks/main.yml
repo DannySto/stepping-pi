@@ -19,11 +19,6 @@
         line: 'MACs hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,umac-128-etm@openssh.com'
         insertafter: '#RekeyLimit default none'
 
-  - replace:
-        path: "{{ ssh_conf_path }}"
-        regexp: '#RekeyLimit default none'
-        replace: 'Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr'
-
   - replace: 
         path: "{{ ssh_conf_path }}"
         regexp: '#PasswordAuthentication yes' 
