@@ -2,18 +2,19 @@ Role Name
 =========
 
 With this Ansible Role playbook you automate the configuration of you raspberry pi into a SSH Stepping stone server
-  roles:
-    - apt_update
-    - ssh_config
-    - ufw
-    - fail2ban
+
+    - roles:
+        - apt_update
+        - ssh_config
+        - ufw
+        - fail2ban
 
 
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This role will harden and reconfigure your ssh server
 
 Role Variables
 --------------
