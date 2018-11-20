@@ -47,7 +47,7 @@
   - replace: 
         path: "{{ ssh_conf_path }}"
         regexp: '#PasswordAuthentication no' 
-        replace: 'PasswordAuthentication no'
+        replace: 'PasswordAuthentication yes'
 
   - replace: 
         path: "{{ ssh_conf_path }}"
@@ -57,9 +57,11 @@
   - replace: 
         path: "{{ ssh_conf_path }}"
         regexp: 'UsePAM yes' 
-        replace: 'UsePAM no'
-      
-    notify: "Restart_service_ssh"     
+        replace: 'UsePAM no'  
+
+  - name: Restart service ssh, in all cases
+    service: name=ssh state=restarted
+    
 
  # - name: Establish Cronjob to update the openssh-server package on a daily basis
  #       cron:
