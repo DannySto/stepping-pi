@@ -1,5 +1,0 @@
----
-- hosts: all_pi
-  become: yes
-  roles:
-    - apt_update

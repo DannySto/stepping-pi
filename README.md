@@ -14,7 +14,7 @@ With this Ansible Role playbook you automate the configuration of you raspberry 
 Requirements
 ------------
 
-This role will install, harden and reconfigure your ssh server into a ssh steppingstone server
+This role will install, harden and reconfigure your raspberry ssh server into a ssh steppingstone server
 
 Role Variables
 --------------
